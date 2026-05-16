@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Your Name — YASH RAJ</title>
+
+  <!-- Google Fonts: Fraunces (headings) + Outfit (body) -->
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,700;0,900;1,700&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet"/>
+
+  <style>
+
+    /* ============================================
+       CSS VARIABLES — change colors here globally
+    ============================================ */
+    :root {
+      --bg:        #f8f7f4;
+      --surface:   #ffffff;
+      --accent:    #1a6cf5;
+      --accent2:   #0fbb94;
+      --ink:       #111827;
+      --body:      #374151;
+      --muted:     #6b7280;
+      --border:    #e5e7eb;
+      --shadow:    0 4px 24px rgba(0,0,0,0.07);
+    }
+
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Outfit', sans-serif;
+      background-color: var(--bg);
+      color: var(--body);
+      line-height: 1.7;
+      background-image: radial-gradient(var(--border) 1px, transparent 1px);
+      background-size: 28px 28px;
+    }
+
+    /* ============================================ NAVBAR ============================================ */
+    nav {
+      position: fixed; top: 0; width: 100%;
+      background: rgba(248,247,244,0.9);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+      z-index: 999;
+    }
+    .nav-inner {
+      max-width: 1100px; margin: 0 auto; padding: 0 2rem;
+      height: 64px; display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo { display:flex; align-items:center; gap:0.6rem; text-decoration:none; }
+    .logo-mark {
+      width:36px; height:36px; background:var(--accent); border-radius:8px;
+      display:flex; align-items:center; justify-content:center;
+      font-family:'Fraunces',serif; font-size:1rem; font-weight:900; color:#fff;
+    }
+    .logo-text { font-family:'Fraunces',serif; font-weight:700; font-size:1.05rem; color:var(--ink); }
+    .nav-links { list-style:none; display:flex; gap:2.5rem; }
+    .nav-links a { text-decoration:none; color:var(--muted); font-size:0.9rem; font-weight:500; transition:color 0.2s; }
+    .nav-links a:hover, .nav-links a.active { color:var(--accent); }
+    .nav-cta { background:var(--accent); color:#fff !important; padding:0.45rem 1.1rem; border-radius:6px; font-weight:600 !important; }
+    .nav-cta:hover { background:#1558d6 !important; color:#fff !important; }
+    .hamburger { display:none; flex-direction:column; gap:5px; background:none; border:none; cursor:pointer; }
+    .hamburger span { display:block; width:22px; height:2px; background:var(--ink); border-radius:2px; }
+    .mobile-menu { display:none; flex-direction:column; background:var(--surface); border-bottom:1px solid var(--border); padding:1.2rem 2rem; gap:1rem; }
+    .mobile-menu.open { display:flex; }
+    .mobile-menu a { color:var(--body); text-decoration:none; font-size:1rem; font-weight:500; }
+
+    /* ============================================ SHARED ============================================ */
+    .container { max-width:1100px; margin:0 auto; padding:0 2rem; }
+    .section { padding:6rem 0; }
+    .section-label { font-size:0.75rem; font-weight:600; letter-spacing:0.14em; text-transform:uppercase; color:var(--accent2); margin-bottom:0.5rem; }
+    .section-title { font-family:'Fraunces',serif; font-size:clamp(2rem,4vw,2.8rem); color:var(--ink); line-height:1.15; margin-bottom:0.8rem; }
+    .section-sub { color:var(--muted); font-size:1rem; max-width:520px; margin-bottom:3rem; }
+    .rule { width:44px; height:3px; background:linear-gradient(90deg,var(--accent),var(--accent2)); border-radius:2px; margin-bottom:2rem; }
+    .btn { display:inline-block; padding:0.75rem 1.8rem; border-radius:8px; font-family:'Outfit',sans-serif; font-size:0.95rem; font-weight:600; text-decoration:none; cursor:pointer; border:2px solid transparent; transition:all 0.2s; }
+    .btn-primary { background:var(--accent); color:#fff; border-color:var(--accent); }
+    .btn-primary:hover { background:#1558d6; border-color:#1558d6; }
+    .btn-ghost { background:transparent; color:var(--ink); border-color:var(--border); }
+    .btn-ghost:hover { border-color:var(--accent); color:var(--accent); }
+
+    /* Scroll-reveal */
+    .reveal { opacity:0; transform:translateY(28px); transition:opacity 0.55s ease, transform 0.55s ease; }
+    .reveal.visible { opacity:1; transform:translateY(0); }
+    .reveal-d1 { transition-delay:0.1s; }
+    .reveal-d2 { transition-delay:0.2s; }
+    .reveal-d3 { transition-delay:0.3s; }
+
+    /* ============================================ HERO ============================================ */
+    #hero { min-height:100vh; display:flex; align-items:center; padding-top:64px; }
+    .hero-inner { display:grid; grid-template-columns:1fr 1fr; gap:4rem; align-items:center; }
+    .hero-tag {
+      display:inline-flex; align-items:center; gap:0.5rem;
+      background:#e8f0fe; color:var(--accent);
+      font-size:0.82rem; font-weight:600; letter-spacing:0.06em; text-transform:uppercase;
+      padding:0.35rem 0.9rem; border-radius:999px; margin-bottom:1.2rem;
+      animation: fadeUp 0.5s ease both;
+    }
+    .hero-dot { width:7px; height:7px; background:var(--accent2); border-radius:50%; animation:blink 1.4s infinite; }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.2} }
+    .hero-heading { font-family:'Fraunces',serif; font-size:clamp(2.8rem,5.5vw,4.2rem); color:var(--ink); line-height:1.08; margin-bottom:1.2rem; animation:fadeUp 0.55s ease both 0.1s; }
+    .hero-heading em { font-style:italic; color:var(--accent); }
+    .hero-desc { color:var(--body); font-size:1.05rem; max-width:420px; margin-bottom:2rem; animation:fadeUp 0.55s ease both 0.2s; }
+    .hero-buttons { display:flex; gap:1rem; flex-wrap:wrap; animation:fadeUp 0.55s ease both 0.3s; }
+
+    /* Code window */
+    .hero-visual { animation:fadeUp 0.6s ease both 0.25s; }
+    .code-window { background:#1e2030; border-radius:14px; box-shadow:0 24px 64px rgba(0,0,0,0.18); overflow:hidden; font-family:'Courier New',monospace; }
+    .code-topbar { background:#272a3d; padding:0.75rem 1rem; display:flex; align-items:center; gap:0.5rem; }
+    .dot-red    { width:12px; height:12px; border-radius:50%; background:#ff5f57; }
+    .dot-yellow { width:12px; height:12px; border-radius:50%; background:#febc2e; }
+    .dot-green  { width:12px; height:12px; border-radius:50%; background:#28c840; }
+    .code-filename { margin-left:auto; font-size:0.75rem; color:#6b7db3; }
+    .code-body { padding:1.5rem 1.8rem; font-size:0.82rem; line-height:1.8; }
+    .c-blue{color:#79b8ff} .c-green{color:#85e89d} .c-pink{color:#f97583} .c-yellow{color:#ffea7f} .c-teal{color:#9ecbff} .c-gray{color:#6b7db3}
+
+    .hero-stats { display:flex; gap:2rem; margin-top:1.5rem; justify-content:center; animation:fadeUp 0.6s ease both 0.4s; }
+    .stat { text-align:center; }
+    .stat-num { font-family:'Fraunces',serif; font-size:1.8rem; color:var(--ink); display:block; }
+    .stat-lbl { font-size:0.8rem; color:var(--muted); }
+
+    /* ============================================ ABOUT ============================================ */
+    #about { background:var(--surface); }
+    .about-grid { display:grid; grid-template-columns:280px 1fr; gap:5rem; align-items:center; }
+    .photo-wrap { position:relative; }
+    .photo-box {
+      width:260px; height:300px;
+      background:linear-gradient(135deg,#e8f0fe,#d1fae5);
+      border-radius:20px; display:flex; align-items:center; justify-content:center;
+      font-size:6rem; border:2px solid var(--border); position:relative; overflow:hidden;
+    }
+    .photo-box::after { content:''; position:absolute; bottom:-12px; right:-12px; width:90px; height:90px; background:var(--accent2); border-radius:14px; opacity:0.15; z-index:-1; }
+    .photo-badge { position:absolute; bottom:-12px; right:-20px; background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:0.6rem 1rem; box-shadow:var(--shadow); font-size:0.8rem; font-weight:600; color:var(--ink); white-space:nowrap; }
+    .photo-badge span { color:var(--accent2); }
+    .about-text h3 { font-family:'Fraunces',serif; font-size:1.6rem; color:var(--ink); margin-bottom:1rem; }
+    .about-text p { color:var(--body); margin-bottom:1rem; font-size:1rem; }
+    .about-chips { display:flex; gap:0.6rem; flex-wrap:wrap; margin-top:1.5rem; }
+    .chip { background:#e8f0fe; color:var(--accent); font-size:0.82rem; font-weight:600; padding:0.3rem 0.9rem; border-radius:999px; border:1px solid #c7d9fc; }
+
+    /* ============================================ SKILLS ============================================ */
+    #skills { background:var(--bg); }
+    .skills-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:1.2rem; }
+    .skill-card { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:1.5rem; box-shadow:var(--shadow); transition:transform 0.2s, border-color 0.2s; }
+    .skill-card:hover { transform:translateY(-3px); border-color:var(--accent); }
+    .skill-icon { font-size:2rem; margin-bottom:0.8rem; display:block; }
+    .skill-name { font-weight:600; color:var(--ink); font-size:0.95rem; margin-bottom:0.3rem; }
+    .skill-level { font-size:0.78rem; color:var(--muted); margin-bottom:0.8rem; }
+    .bar-track { height:5px; background:var(--border); border-radius:999px; overflow:hidden; }
+    .bar-fill { height:100%; width:0; border-radius:999px; background:linear-gradient(90deg,var(--accent),var(--accent2)); transition:width 1.2s ease; }
+
+    /* ============================================ PROJECTS ============================================ */
+    #projects { background:var(--surface); }
+    .projects-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:1.5rem; }
+    .project-card { background:var(--bg); border:1px solid var(--border); border-radius:14px; padding:1.8rem; display:flex; flex-direction:column; gap:0.8rem; transition:transform 0.2s, border-color 0.2s, box-shadow 0.2s; }
+    .project-card:hover { transform:translateY(-5px); border-color:var(--accent); box-shadow:0 12px 40px rgba(26,108,245,0.1); }
+    .project-type { font-size:0.72rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--accent2); }
+    .project-card h3 { font-family:'Fraunces',serif; font-size:1.25rem; color:var(--ink); }
+    .project-card p { font-size:0.92rem; color:var(--muted); flex:1; }
+    .tech-pills { display:flex; gap:0.4rem; flex-wrap:wrap; }
+    .pill { background:var(--surface); border:1px solid var(--border); color:var(--muted); font-size:0.73rem; font-weight:600; padding:0.2rem 0.65rem; border-radius:999px; }
+    .project-footer { display:flex; gap:1rem; margin-top:0.5rem; padding-top:0.8rem; border-top:1px solid var(--border); }
+    .proj-link { font-size:0.88rem; font-weight:600; color:var(--accent); text-decoration:none; display:inline-flex; align-items:center; gap:0.3rem; }
+    .proj-link:hover { text-decoration:underline; }
+    .proj-link.ghost { color:var(--muted); }
+
+    /* ============================================ CONTACT ============================================ */
+    #contact { background:var(--bg); }
+    .contact-wrapper { display:grid; grid-template-columns:1fr 1fr; gap:4rem; align-items:start; }
+    .contact-info p { color:var(--muted); font-size:0.98rem; margin-bottom:2rem; }
+    .contact-row { display:flex; align-items:center; gap:1rem; margin-bottom:1.2rem; }
+    .c-icon { width:44px; height:44px; background:var(--surface); border:1px solid var(--border); border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:1.2rem; flex-shrink:0; box-shadow:var(--shadow); }
+    .c-detail span { display:block; font-size:0.75rem; color:var(--muted); font-weight:500; }
+    .c-detail a, .c-detail strong { color:var(--ink); font-size:0.92rem; font-weight:600; text-decoration:none; }
+    .c-detail a:hover { color:var(--accent); }
+    .contact-form { background:var(--surface); border:1px solid var(--border); border-radius:16px; padding:2rem; box-shadow:var(--shadow); display:flex; flex-direction:column; gap:1.1rem; }
+    .contact-form h3 { font-family:'Fraunces',serif; font-size:1.3rem; color:var(--ink); margin-bottom:0.3rem; }
+    .form-row { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+    .field { display:flex; flex-direction:column; gap:0.4rem; }
+    .field label { font-size:0.82rem; font-weight:600; color:var(--muted); }
+    .field input, .field textarea { background:var(--bg); border:1.5px solid var(--border); border-radius:8px; padding:0.7rem 0.9rem; font-family:'Outfit',sans-serif; font-size:0.92rem; color:var(--ink); transition:border-color 0.2s; resize:none; }
+    .field input:focus, .field textarea:focus { outline:none; border-color:var(--accent); }
+    .field textarea { height:110px; }
+    .form-success { display:none; color:#059669; font-size:0.88rem; font-weight:600; background:#d1fae5; padding:0.6rem 1rem; border-radius:8px; }
+
+    /* ============================================ FOOTER ============================================ */
+    footer { background:var(--ink); color:#9ca3af; text-align:center; padding:2.5rem 2rem; font-size:0.85rem; }
+    .footer-logo { font-family:'Fraunces',serif; color:#fff; font-size:1.3rem; margin-bottom:0.5rem; }
+    footer a { color:var(--accent2); text-decoration:none; }
+
+    @keyframes fadeUp { from{opacity:0;transform:translateY(22px)} to{opacity:1;transform:translateY(0)} }
+
+    /* ============================================ RESPONSIVE ============================================ */
+    @media (max-width: 768px) {
+      .nav-links { display:none; }
+      .hamburger { display:flex; }
+      .hero-inner { grid-template-columns:1fr; text-align:center; }
+      .hero-buttons { justify-content:center; }
+      .hero-visual { display:none; }
+      .about-grid { grid-template-columns:1fr; text-align:center; }
+      .photo-box { margin:0 auto; }
+      .photo-badge { right:0; }
+      .about-chips { justify-content:center; }
+      .contact-wrapper { grid-template-columns:1fr; }
+      .form-row { grid-template-columns:1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ======================== NAVBAR ======================== -->
+  <nav>
+    <div class="nav-inner">
+      <!-- Change "YN" to your initials and "Yash Raj" to your actual name -->
+      <a href="#hero" class="nav-logo">
+        <div class="logo-mark">YR</div>
+        <span class="logo-text">Yash Raj</span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#contact" class="nav-cta">Hire Me</a></li>
+      </ul>
+
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="mobile-menu" id="mobile-menu">
+      <a href="#about"    onclick="closeMobile()">About</a>
+      <a href="#skills"   onclick="closeMobile()">Skills</a>
+      <a href="#projects" onclick="closeMobile()">Projects</a>
+      <a href="#contact"  onclick="closeMobile()">Hire Me</a>
+    </div>
+  </nav>
+
+
+  <!-- ======================== HERO ======================== -->
+  <section id="hero" class="section">
+    <div class="container">
+      <div class="hero-inner">
+
+        <!-- LEFT: text -->
+        <div>
+          <div class="hero-tag">
+            <div class="hero-dot"></div>
+            Available for Work
+          </div>
+          <!-- Change "Your Name" and the subtitle below -->
+          <h1 class="hero-heading">
+            I'm <em>Yash Raj</em>,<br/>
+            Web Developer
+          </h1>
+          <p class="hero-desc">
+            I build clean, fast, and accessible websites and web apps.
+            Passionate about turning ideas into real digital products that people love to use.
+          </p>
+          <div class="hero-buttons">
+            <a href="#projects" class="btn btn-primary">See My Work</a>
+            <a href="#contact"  class="btn btn-ghost">Get In Touch</a>
+          </div>
+        </div>
+
+        <!-- RIGHT: decorative code window (hidden on mobile) -->
+        <div class="hero-visual">
+          <div class="code-window">
+            <div class="code-topbar">
+              <div class="dot-red"></div>
+              <div class="dot-yellow"></div>
+              <div class="dot-green"></div>
+              <span class="code-filename">portfolio.js</span>
+            </div>
+            <div class="code-body">
+              <div><span class="c-pink">const</span> <span class="c-blue">developer</span> = {</div>
+              <div>&nbsp;&nbsp;<span class="c-green">name</span>: <span class="c-yellow">"Yash Raj"</span>,</div>
+              <div>&nbsp;&nbsp;<span class="c-green">role</span>: <span class="c-yellow">"Web Developer"</span>,</div>
+              <div>&nbsp;&nbsp;<span class="c-green">skills</span>: [</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="c-yellow">"HTML"</span>, <span class="c-yellow">"CSS"</span>,</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="c-yellow">"JavaScript"</span>, <span class="c-yellow">"React"</span></div>
+              <div>&nbsp;&nbsp;],</div>
+              <div>&nbsp;&nbsp;<span class="c-green">available</span>: <span class="c-teal">true</span>,</div>
+              <div>&nbsp;&nbsp;<span class="c-green">lovesCoffee</span>: <span class="c-teal">true</span></div>
+              <div>};</div>
+              <div>&nbsp;</div>
+              <div><span class="c-gray">// Let's build something great!</span></div>
+              <div><span class="c-blue">console</span>.<span class="c-green">log</span>(<span class="c-yellow">"Hello, World!"</span>);</div>
+            </div>
+          </div>
+          <!-- Change these numbers to match your own experience -->
+          <div class="hero-stats">
+            <div class="stat"><span class="stat-num">1+</span><span class="stat-lbl">Years Learning</span></div>
+            <div class="stat"><span class="stat-num">1</span><span class="stat-lbl">Projects Built</span></div>
+            <div class="stat"><span class="stat-num">5+</span><span class="stat-lbl">Technologies</span></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ======================== ABOUT ======================== -->
+  <section id="about" class="section" style="background:var(--surface)">
+    <div class="container">
+      <p class="section-label reveal">Who I Am</p>
+      <h2 class="section-title reveal">About Me</h2>
+      <div class="rule reveal"></div>
+
+      <div class="about-grid">
+
+        <!-- Photo: replace the emoji with your own <img> tag if you have a photo -->
+        <div class="photo-wrap reveal">
+          <div class="photo-box"><img src="yashpic.jpeg" alt="MY PHOTO" style="width: 100%; height: auto;"></div>
+          <div class="photo-badge">🟢 Open to Work <span>•</span> Internship</div>
+        </div>
+
+        <!-- Edit this text with your own story -->
+        <div class="about-text reveal reveal-d2">
+          <h3>Hello! I'm Yash Raj 👋</h3>
+          <p>
+            I'm a web developer based in <strong>Bhubaneswar, INDIA</strong> with a passion
+            for crafting beautiful, performant websites. I started learning web development
+            because I love the idea that anyone with a laptop can build something that reaches
+            the whole world.
+          </p>
+          <p>
+            I enjoy writing clean, well-structured code and I'm always curious about
+            learning new tools and technologies. Whether it's a simple landing page or a
+            full-stack application, I give every project my full attention.
+          </p>
+          <p>
+            When I'm not coding, you'll find me exploring design, watching tech talks, or
+            enjoying a good cup of coffee ☕.
+          </p>
+          <!-- Edit these chips to describe yourself -->
+          <div class="about-chips">
+           <span class="chip">AI & Machine Learning</span>
+           <span class="chip">Full Stack Developer</span>
+           <span class="chip">Python</span>
+           <span class="chip">Data Science</span>
+           <span class="chip">Problem Solving</span>
+           <span class="chip">DSA</span>
+           <span class="chip">Open to Internship</span>
+           <span class="chip">Self Driven</span>
+           <span class="chip">Team Player</span>
+           <span class="chip">Clean Code</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ======================== SKILLS ======================== -->
+  <section id="skills" class="section">
+    <div class="container">
+      <p class="section-label reveal">What I Know</p>
+      <h2 class="section-title reveal">My Skills</h2>
+      <div class="rule reveal"></div>
+      <p class="section-sub reveal">Technologies and tools I work with regularly.</p>
+
+      <div class="skills-grid">
+        <!-- Each card: edit the icon, skill name, level label, and data-width % -->
+
+        <div class="skill-card reveal">
+          <span class="skill-icon">🌐</span>
+          <div class="skill-name">HTML5</div>
+          <div class="skill-level">Advanced</div>
+          <div class="bar-track"><div class="bar-fill" data-width="92%"></div></div>
+        </div>
+
+        <div class="skill-card reveal reveal-d1">
+          <span class="skill-icon">🎨</span>
+          <div class="skill-name">CSS3</div>
+          <div class="skill-level">Advanced</div>
+          <div class="bar-track"><div class="bar-fill" data-width="88%"></div></div>
+        </div>
+
+        <div class="skill-card reveal reveal-d2">
+          <span class="skill-icon">⚡</span>
+          <div class="skill-name">JavaScript (ES6+)</div>
+          <div class="skill-level">Intermediate</div>
+          <div class="bar-track"><div class="bar-fill" data-width="75%"></div></div>
+        </div>
+
+        <div class="skill-card reveal reveal-d3">
+          <span class="skill-icon">⚛️</span>
+          <div class="skill-name">React</div>
+          <div class="skill-level">Beginner</div>
+          <div class="bar-track"><div class="bar-fill" data-width="68%"></div></div>
+        </div>
+
+        <div class="skill-card reveal">
+          <span class="skill-icon">🔧</span>
+          <div class="skill-name">Git & GitHub</div>
+          <div class="skill-level">Beginner</div>
+          <div class="bar-track"><div class="bar-fill" data-width="80%"></div></div>
+        </div>
+
+        <div class="skill-card reveal reveal-d1">
+          <span class="skill-icon">🗄️</span>
+          <div class="skill-name">Node.js</div>
+          <div class="skill-level">Beginner</div>
+          <div class="bar-track"><div class="bar-fill" data-width="55%"></div></div>
+        </div>
+
+        <div class="skill-card reveal reveal-d2">
+          <span class="skill-icon">🛢️</span>
+          <div class="skill-name">SQL</div>
+          <div class="skill-level">Beginner</div>
+          <div class="bar-track"><div class="bar-fill" data-width="50%"></div></div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ======================== PROJECTS ======================== -->
+  <section id="projects" class="section" style="background:var(--surface)">
+    <div class="container">
+      <p class="section-label reveal">What I've Built</p>
+      <h2 class="section-title reveal">My Projects</h2>
+      <div class="rule reveal"></div>
+      <p class="section-sub reveal">A selection of projects I've worked on. Click to explore.</p>
+
+      <div class="projects-grid">
+
+        <!-- PROJECT 1 — edit title, description, tech pills, and href links -->
+        <div class="project-card reveal">s
+          <span class="project-type">🌐Website</span>
+          <h3>Portfolio Website</h3>
+          <p>A personal portfolio website designed to showcasemy skills, projects, and contact information. 
+            Built from scratch using pure HTML, CSS, and JavaScript with smooth scroll animations and a fully responsive mobile-friendly layout.</p>
+          <div class="tech-pills">
+            <span class="pill">HTML</span>
+            <span class="pill">CSS</span>
+            <span class="pill">JavaScript</span>
+          </div>
+          <div class="project-footer">
+            <a href="https://yashraj2727.github.io/myportfolio/" class="proj-link">🔗 Live Demo</a>
+            <a href="https://github.com/yashraj2727" class="proj-link ghost">GitHub →</a>
+          </div>
+        </div>
+
+        <!-- PROJECT 2 -->
+        <div class="project-card reveal reveal-d1">
+          <span class="project-type">TO-DO list app</span>
+          <h3>To-Do list app</h3>
+          <p>A clean and simple task manager app where you can add, complete, and delete daily tasks. 
+            Built using HTML, CSS, and JavaScript.I learned how to manipulate the DOM and save tasks
+             using localStorage so they don't disappear on refresh.</p>
+          <div class="tech-pills">
+            <span class="pill">HTML</span>
+            <span class="pill">CSS</span>
+            <span class="pill">JavaScript</span>
+          </div>
+          <div class="project-footer">
+            <a href="#" class="proj-link">🔗 Live Demo</a>
+            <a href="https://github.com/yashraj2727" class="proj-link ghost">GitHub →</a>
+          </div>
+        </div>
+
+        <!-- PROJECT 3 -->
+        <div class="project-card reveal reveal-d2">
+          <span class="project-type">Weather App</span>
+          <h3>Weather App</h3>
+          <p>A real-time weather app that shows the current temperature, humidity, and weather 
+            condition for any city in the world.I learned how to connect to a live API using 
+            JavaScript fetch and display dynamic data on the screen.</p>         
+          <div class="tech-pills">
+            <span class="pill">HTML</span>
+            <span class="pill">CSS</span>
+            <span class="pill">JavaScript</span>
+            <span class="pill">API</span>
+          </div>
+          <div class="project-footer">
+            <a href="#" class="proj-link">🔗 Live Demo</a>
+            <a href="https://github.com/yashraj2727" class="proj-link ghost">GitHub →</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ======================== CONTACT ======================== -->
+  <section id="contact" class="section">
+    <div class="container">
+      <p class="section-label reveal">Let's Connect</p>
+      <h2 class="section-title reveal">Get In Touch</h2>
+      <div class="rule reveal"></div>
+
+      <div class="contact-wrapper">
+
+        <!-- Left: contact details — replace with your real info -->
+        <div class="contact-info reveal">
+          <p>I'm currently open to freelance projects and full-time opportunities. Have a project in mind or just want to say hi? Drop me a message!</p>
+
+          <div class="contact-row">
+            <div class="c-icon">📧</div>
+            <div class="c-detail">
+              <span>Email</span>
+              <a href="mailto:you@email.com">yashrajhere27@gmail.com</a>
+            </div>
+          </div>
+
+          <div class="contact-row">
+            <div class="c-icon">💼</div>
+            <div class="c-detail">
+              <span>LinkedIn</span>
+              <a href="https://www.linkedin.com/in/yash-raj-737859368" target="_blank">linkedin.com/in/yash-raj-737859368</a>
+            </div>
+          </div>
+
+          <div class="contact-row">
+            <div class="c-icon">🐙</div>
+            <div class="c-detail">
+              <span>GitHub</span>
+              <a href="https://github.com/yashraj2727" target="_blank">github.com/yashraj2727</a>
+            </div>
+          </div>
+
+          <div class="contact-row">
+            <div class="c-icon">📍</div>
+            <div class="c-detail">
+              <span>Location</span>
+              <strong>Bhubaneswar, INDIA</strong>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: contact form -->
+        <div class="contact-form reveal reveal-d2">
+          <h3>Send a Message ✉️</h3>
+
+          <div class="form-row">
+            <div class="field">
+              <label for="fname">First Name</label>
+              <input type="text" id="fname" placeholder="John" />
+            </div>
+            <div class="field">
+              <label for="lname">Last Name</label>
+              <input type="text" id="lname" placeholder="Doe" />
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" placeholder="john@gmail.com" />
+          </div>
+
+          <div class="field">
+            <label for="subject">Subject</label>
+            <input type="text" id="subject" placeholder="Project idea / Job offer / Just saying hi" />
+          </div>
+
+          <div class="field">
+            <label for="message">Message</label>
+            <textarea id="message" placeholder="Tell me about your project or what you have in mind..."></textarea>
+          </div>
+
+          <button class="btn btn-primary" onclick="handleSend()">Send Message →</button>
+
+          <!-- Success banner — shown after clicking Send -->
+          <div class="form-success" id="success-msg">
+            ✅ Message received! I'll get back to you soon.
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ======================== FOOTER ======================== -->
+  <footer>
+    <div class="footer-logo">Yash Raj.</div>
+    <p>Web Developer &nbsp;·&nbsp; Built with HTML, CSS & JavaScript</p>
+    <p style="margin-top:0.4rem">
+      © 2025 Yash Raj &nbsp;·&nbsp;
+      <a href="https://github.com/yashraj2727" target="_blank">GitHub</a> &nbsp;·&nbsp;
+      <a href="https://www.linkedin.com/in/yash-raj-737859368" target="_blank">LinkedIn</a>
+    </p>
+  </footer>
+
+
+  <!-- ======================== JAVASCRIPT ======================== -->
+  <script>
+    /*
+     * This page has 4 small JavaScript features:
+     *  1. Mobile menu — open / close
+     *  2. Scroll-reveal — elements fade in when you scroll to them
+     *  3. Nav highlight — active link turns blue as you scroll
+     *  4. Contact form — shows success message on submit
+     */
+
+
+    /* ---- 1. MOBILE MENU ---- */
+    const hamburger  = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    // Toggle the "open" class when hamburger is clicked
+    hamburger.addEventListener('click', function () {
+      mobileMenu.classList.toggle('open');
+    });
+
+    // Called by onclick on each mobile link — closes the menu
+    function closeMobile() {
+      mobileMenu.classList.remove('open');
+    }
+
+
+    /* ---- 2. SCROLL-REVEAL ANIMATION ----
+       IntersectionObserver watches every .reveal element.
+       When it enters the screen, we add the "visible" class,
+       which triggers the CSS fade-up transition.
+    */
+    const revealEls = document.querySelectorAll('.reveal');
+
+    const observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+
+          // Fade the element in
+          entry.target.classList.add('visible');
+
+          // If there's a skill bar inside, animate it too
+          const bar = entry.target.querySelector('.bar-fill');
+          if (bar) {
+            bar.style.width = bar.getAttribute('data-width');
+          }
+
+          // Stop watching once visible — no need to repeat
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });   // trigger when 12% of element is on screen
+
+    revealEls.forEach(function (el) {
+      observer.observe(el);
+    });
+
+
+    /* ---- 3. ACTIVE NAV HIGHLIGHT ----
+       As you scroll, the nav link for the current section
+       gets highlighted in blue.
+    */
+    const allSections = document.querySelectorAll('section[id]');
+    const allNavLinks  = document.querySelectorAll('.nav-links a');
+
+    window.addEventListener('scroll', function () {
+      let current = '';
+
+      allSections.forEach(function (sec) {
+        // If we've scrolled past the top of this section
+        if (window.scrollY >= sec.offsetTop - 80) {
+          current = sec.getAttribute('id');
+        }
+      });
+
+      allNavLinks.forEach(function (link) {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === '#' + current) {
+          link.classList.add('active');
+        }
+      });
+    });
+
+
+    /* ---- 4. CONTACT FORM ----
+       Simple front-end validation + success message.
+       To actually send emails, sign up at formspree.io or emailjs.com
+       and follow their free setup guide.
+    */
+    function handleSend() {
+      const fname   = document.getElementById('fname').value.trim();
+      const email   = document.getElementById('email').value.trim();
+      const message = document.getElementById('message').value.trim();
+
+      // Make sure the required fields are filled
+      if (!fname || !email || !message) {
+        alert('Please fill in your name, email, and message before sending.');
+        return;
+      }
+
+      // Show success message
+      const successMsg = document.getElementById('success-msg');
+      successMsg.style.display = 'block';
+
+      // Clear the form
+      document.getElementById('fname').value    = '';
+      document.getElementById('lname').value    = '';
+      document.getElementById('email').value    = '';
+      document.getElementById('subject').value  = '';
+      document.getElementById('message').value  = '';
+
+      // Hide success message after 5 seconds
+      setTimeout(function () {
+        successMsg.style.display = 'none';
+      }, 5000);
+    }
+  </script>
+
+</body>
+</html>
